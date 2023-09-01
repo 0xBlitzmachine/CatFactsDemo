@@ -26,4 +26,3 @@ fun getDatabase(context: Context): CatFactDatabase {
         return INSTANCE
     }
 }
-

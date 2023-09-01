@@ -1,5 +1,6 @@
 package com.blitzmachine.catfactsdemo.io.remote
 
+import androidx.lifecycle.LiveData
 import com.blitzmachine.catfactsdemo.model.CatFact
 import com.blitzmachine.catfactsdemo.model.CatFacts
 import retrofit2.http.GET
