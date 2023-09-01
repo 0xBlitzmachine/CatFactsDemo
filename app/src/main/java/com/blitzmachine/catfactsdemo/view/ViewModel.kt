@@ -3,7 +3,6 @@ package com.blitzmachine.catfactsdemo.view
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.blitzmachine.catfactsdemo.io.Repository
-import com.blitzmachine.catfactsdemo.io.local.CatFactDatabase
 import com.blitzmachine.catfactsdemo.io.local.getDatabase
 import com.blitzmachine.catfactsdemo.io.remote.CatFactApi
 
