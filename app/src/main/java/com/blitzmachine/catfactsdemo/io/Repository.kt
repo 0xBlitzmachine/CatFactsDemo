@@ -33,7 +33,7 @@ class Repository(private val catFactApi: CatFactApi, private val catFactDatabase
 
     suspend fun getListOfCatFacts() {
         try {
-            _listOfCatFacts.postValue(catFactApi.httpRoutes.getAllFacts().data)
+            _listOfCatFacts.postValue(catFactApi.httpRoutes.getAllFacts(332).data)
         } catch (ex: Exception) {
             Log.e(Utils.logTagRepository, ex.message!!)
         }

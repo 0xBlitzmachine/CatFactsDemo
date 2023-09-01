@@ -11,6 +11,6 @@ interface HttpRoutes {
     @GET("fact")
     suspend fun getRandomFact(): CatFact
 
-    @GET("facts?limit=332")
-    suspend fun getAllFacts(page: Int): CatFacts
+    @GET("facts?")
+    suspend fun getAllFacts(@Query("limit")limit: Int): CatFacts
 }
