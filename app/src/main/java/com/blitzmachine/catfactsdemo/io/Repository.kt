@@ -10,32 +10,32 @@ import com.blitzmachine.catfactsdemo.model.CatFacts
 import com.blitzmachine.catfactsdemo.utils.Utils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.Exception
+import kotlin.coroutines.coroutineContext
 
 class Repository(private val catFactApi: CatFactApi, private val catFactDatabase: CatFactDatabase) {
 
-    private val _randomCatFact: MutableLiveData<CatFact> = MutableLiveData()
-    val randomCatFact: LiveData<CatFact> get() = _randomCatFact
+    val allCatFacts: LiveData<List<CatFact>> = catFactDatabase.catfactDao.getAllFacts()
 
-    private val _listOfCatFacts: MutableLiveData<List<CatFact>> = MutableLiveData()
-    val listOfCatFacts: LiveData<List<CatFact>> get() = _listOfCatFacts
-
-
-    suspend fun getRandomCatFact() {
-        try {
-            _randomCatFact.postValue(catFactApi.httpRoutes.getRandomFact())
-        } catch (ex: Exception) {
-            Log.e(Utils.logTagRepository, ex.message!!)
+    init {
+        MainScope().launch(Dispatchers.IO) {
+            loadAllCatFacts()
         }
     }
 
-    suspend fun getListOfCatFacts() {
+    suspend fun loadAllCatFacts() {
         try {
-            _listOfCatFacts.postValue(catFactApi.httpRoutes.getAllFacts(332).data)
+            catFactApi.httpRoutes.getAllFacts(50).also {
+                MainScope().launch(Dispatchers.IO) {
+                    catFactDatabase.catfactDao.deleteAllFacts()
+                    catFactDatabase.catfactDao.insertFacts(it.data)
+                }
+            }
         } catch (ex: Exception) {
-            Log.e(Utils.logTagRepository, ex.message!!)
+            Log.e(Utils.logTagRepository, "${ex.message}")
         }
     }
 }

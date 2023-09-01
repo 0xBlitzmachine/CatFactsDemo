@@ -16,18 +16,11 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     private val database = getDatabase(application)
     private val repository = Repository(CatFactApi, database)
 
-    val randomCatFact: LiveData<CatFact> = repository.randomCatFact
-    val listOfCatFacts: LiveData<List<CatFact>> = repository.listOfCatFacts
+    val allCatFacts: LiveData<List<CatFact>> = repository.allCatFacts
 
-    fun getRandomCatFact() {
+    fun loadCatFacts() {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.getRandomCatFact()
-        }
-    }
-
-    fun getListOfCatFacts() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.getListOfCatFacts()
+            repository.loadAllCatFacts()
         }
     }
 }

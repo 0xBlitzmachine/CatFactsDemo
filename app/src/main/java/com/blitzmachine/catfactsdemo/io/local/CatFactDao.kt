@@ -1,5 +1,6 @@
 package com.blitzmachine.catfactsdemo.io.local
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -15,5 +16,8 @@ interface CatFactDao {
     fun insertFacts(facts: List<CatFact>)
 
     @Query("SELECT * from ${Utils.tableName}")
-    fun getAllFacts(): List<CatFact>
+    fun getAllFacts(): LiveData<List<CatFact>>
+
+    @Query("DELETE from ${Utils.tableName}")
+    fun deleteAllFacts()
 }

@@ -18,18 +18,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.randomCatFact.observe(viewLifecycleOwner) {
-            binding.testView.text = it.fact
-        }
-
-        viewModel.listOfCatFacts.observe(viewLifecycleOwner) {
-            Log.d("Frags", it.toString())
+        viewModel.allCatFacts.observe(viewLifecycleOwner) {
+                Log.d("Test", (it[(0 ..it.lastIndex).random()].fact))
         }
 
         binding.floatingActionButton.setOnClickListener {
-            viewModel.getRandomCatFact()
-            viewModel.getListOfCatFacts()
+            viewModel.loadCatFacts()
         }
-
     }
 }
